@@ -2,6 +2,9 @@
 + Java 11
 + Python 3.8
 
+<strong>Note</strong>: To ease usage, we provide a VirtualBox image under [MATE](https://figshare.com/articles/software/MATE_ova/13905353)
+
+
 # Setup
 
 The MATE project consists of two parts: Java simulation and Gym environment.
