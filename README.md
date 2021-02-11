@@ -1,3 +1,7 @@
+This repository contains the source code for the paper "MATE: A Testbed for Simulating Multi-Agent Manufacturing Systems" submitted to SEAMS 2021.
+
+MATE is a testbed for evaluating task allocation algorithms in a Jadex-based multi-agent manufacturing simulation. In the simulation, the self-organized AGVs are steered by the machines' behavior—machines control the AGVs' routing behavior by switching capabilities.
+
 # Requirements
 + Java 11
 + Python 3.8
@@ -18,7 +22,7 @@ cd jobshop_simulation
 
 + To install the necessary Python packages:
 
-```$xslt
+"`$xslt
 cd jobshop_gym
 pip install -r requirements.txt
 ```
@@ -26,19 +30,19 @@ pip install -r requirements.txt
 # Running
 First, the user needs to run the Java simulation to start the gRPC server—to do so, switch into the jobshop_simulation directory and run:
 
-```$xslt
+"`$xslt
 cd jobshop_simulation
 ./gradlew run
 ```
 The default port is 50051; the user can change the port by running:
 
-```$xslt
+"`$xslt
 ./gradlew run --args=50052
 ```
 
 Once the server has started, the user can run the Gym environment; switch into the jobshop_gym directory, and type:
 
-```$xslt
+"`$xslt
 cd jobshop_gym
 python3 main.py
 ```
@@ -53,11 +57,11 @@ Alternatively, the user can import and run the two projects via IntelliJ and PyC
 
 The user can add new MATE environments by specifying a unique TOML file and placing them in the following directory:
 
-```$xslt
+"`$xslt
 /jobshop_simulation/src/main/resources/settings/
 ```
 
-Furthermore, the user can find a set of predefined environments in the above directory. Refer to ``triple.toml`` to get an overview of the various configuration options.
+Furthermore, the user can find a set of predefined environments in the above directory. Refer to "triple.toml "to get an overview of the various configuration options.
 
 ## Three machines – triple.toml
 
