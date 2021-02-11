@@ -1,0 +1,100 @@
+plugins {
+	id 'java'
+	id 'checkstyle'
+	id 'application'
+	id 'com.google.protobuf' version '0.8.8'
+	id 'org.openjfx.javafxplugin' version '0.0.8'
+	//id "com.github.spotbugs" version "4.0.5"
+}
+
+sourceCompatibility = 1.8
+
+dependencies {
+	implementation 'org.activecomponents.jadex:jadex-distribution-standard:4.0.170'
+	implementation 'com.moandjiezana.toml:toml4j:0.7.2'
+	implementation 'io.grpc:grpc-netty-shaded:1.29.0'
+	implementation 'io.grpc:grpc-protobuf:1.29.0'
+	implementation 'io.grpc:grpc-stub:1.29.0'
+}
+
+repositories {
+	// Some default repositories for open source Java artifacts
+	mavenCentral()
+	jcenter()
+	
+	// Additional repositories (only required when using nightlies and/or pro version of Jadex).
+	maven {
+		url "https://nexus.actoron.com/content/repositories/oss-nightlies"
+	}
+	maven {
+		url "http://nexus.actoron.com/nexus/content/repositories/pro"
+	}
+	maven {
+		url "http://nexus.actoron.com/nexus/content/repositories/pro-nightlies"
+	}
+}
+
+ext {
+	javaMainClass = "jobshop.GymMain"
+}
+
+application {
+	mainClassName = javaMainClass
+}
+
+//JavaFX related
+javafx {
+	version = "14"
+	modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+sourceSets.main {
+	java {
+		srcDir 'src/main/java' //assume that your source codes are inside this path
+	}
+	resources {
+		srcDirs = ['src/main/java', 'src/main/resources']
+		exclude "**/*.java"
+	}
+}
+
+//checkstyle
+checkstyle {
+	toolVersion '7.8.1'
+	configFile file("config/checkstyle/checkstyle.xml")
+}
+checkstyleMain {
+	source ='src/main/java'
+}
+checkstyleTest {
+	source ='src/test/java'
+}
+
+//protobuf codegen
+protobuf {
+	protoc {
+		artifact = "com.google.protobuf:protoc:3.11.0"
+	}
+	plugins {
+		grpc {
+			artifact = 'io.grpc:protoc-gen-grpc-java:1.29.0'
+		}
+	}
+	generateProtoTasks {
+		all()*.plugins {
+			grpc {}
+		}
+	}
+}
+
+// Inform IDEs like IntelliJ IDEA, Eclipse or NetBeans about the generated code.
+sourceSets {
+	main {
+		java {
+			srcDirs 'build/generated/source/proto/main/grpc'
+			srcDirs 'build/generated/source/proto/main/java'
+		}
+	}
+}
+
+startScripts.enabled = false

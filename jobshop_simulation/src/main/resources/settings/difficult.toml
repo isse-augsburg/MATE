@@ -1,0 +1,238 @@
+# General settings
+
+# AGV settings
+agvGroupSize = 22
+
+# Product settings
+batchCount = 4
+batchFrequency = 200
+batchRandomized = true
+batchRandomizedSize = 50
+
+# Rescheduling settings
+# The maximal episode len
+timeout = 1000
+# Rescheduling frequency
+schedulingFrequency = 350
+# choose one/multiple to reschedule periodically, event-based or both
+schedulingStrategy = {batch = true, failure = false, periodic = false}
+
+
+# Settings for positioning
+
+agvStartArea = {posX = 0.5, posY = 0.5, width = 0.1, height = 0.1}
+productStartArea = {posX = 0.0, posY = 0.45, width = 0.1, height = 0.1}
+productEndArea = {posX = 0.9, posY = 0.45, width = 0.1, height = 0.1}
+
+
+# The different products and their workflows
+
+[[productManagers]]
+  quantity = 30
+  product = {id = "PRODUCT_A", duration = -1, size = 1.0, workflow = ["A", "B", "C"]}
+
+[[productManagers]]
+  quantity = 30
+  product = {id = "PRODUCT_B", duration = -1, size = 1.0, workflow = ["B", "A", "C"]}
+
+[[productManagers]]
+  quantity = 30
+  product = {id = "PRODUCT_C", duration = -1, size = 1.0, workflow = ["C", "D"]}
+
+[[productManagers]]
+  quantity = 30
+  product = {id = "PRODUCT_D", duration = -1, size = 1.0, workflow = ["A", "D", "C", "B"]}
+
+
+# The machine settings
+
+[[machines]]
+  id = "Machine-1"
+  location = {posX = 0.2, posY = 0.1}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "A"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-2"
+  location = {posX = 0.5, posY = 0.1}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "B"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-3"
+  location = {posX = 0.8, posY = 0.1}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "C"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-4"
+  location = {posX = 0.35, posY = 0.2}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "C"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-5"
+  location = {posX = 0.65, posY = 0.2}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "C"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-6"
+  location = {posX = 0.5, posY = 0.3}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "C"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-7"
+  location = {posX = 0.5, posY = 0.7}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "C"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-8"
+  location = {posX = 0.35, posY = 0.8}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "C"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-9"
+  location = {posX = 0.65, posY = 0.8}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "C"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-10"
+  location = {posX = 0.2, posY = 0.9}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "A"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-11"
+  location = {posX = 0.5, posY = 0.9}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "B"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-12"
+  location = {posX = 0.8, posY = 0.9}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "C"
+    randomCapability = true
+    randomFailures = 0.2
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "C", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "D", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]

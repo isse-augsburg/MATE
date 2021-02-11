@@ -1,0 +1,114 @@
+# General settings
+
+# The number of AGVs spawned in the environment
+agvGroupSize = 6
+
+# Product settings
+# The number of product batches that are spawned
+batchCount = 1
+# The frequency at which batches are spawned. Time in seconds.
+batchFrequency = 100
+# If true, the ratio of the specified product types will be randomized each batch
+batchRandomized = true
+# The size of the randomized batch
+batchRandomizedSize = 30
+
+# Rescheduling settings
+# The maximal episode len, after which a timeout occurs and the episode terminates. Time in seconds.
+timeout = 300
+# Rescheduling frequency, the time in seconds after which a reschedule will be triggered
+schedulingFrequency = 300
+# Choose one/multiple to reschedule periodically, event-based or both.
+# Can be combined in any arbitrary way; note that schedulingFrequency has no effect if periodic is set to false.
+schedulingStrategy = {batch = false, failure = false, periodic = true}
+
+
+# Settings for positioning
+# The positions of the different areas.
+# NOTE: choose coordinated only in a range between 0.0 and 1.0!
+agvStartArea = {posX = 0.5, posY = 0.1, width = 0.1, height = 0.1}
+productStartArea = {posX = 0.0, posY = 0.0, width = 0.1, height = 0.1}
+productEndArea = {posX = 0.9, posY = 0.9, width = 0.1, height = 0.1}
+
+
+# The different products and their workflows
+# Specify the different product types; one entry for each product.
+[[productManagers]]
+  # The number of products spawned per batch; will be overwritten if batch composition is randomized.
+  quantity = 10
+  # id: A unique id that identifies the product type
+  # duration: An optional parameter which denotes after how many seconds the product should finish.
+  # Will be used to calculate due dates. If set to -1 the attribute will be ignored.
+  # size: How much space a product takes on a machines buffer.
+  # workflow: a list of operations that need to be processed in order.
+  # NOTE: workflow capabilities must match with machine capabilities!
+  product = {id = "PRODUCT_A", duration = -1, size = 1.0, workflow = ["A"]}
+
+[[productManagers]]
+  quantity = 20
+  product = {id = "PRODUCT_B", duration = -1, size = 1.0, workflow = ["B"]}
+
+
+# The machine settings
+
+# Specify the machines in the environmnet; each machine has a seperate entry.
+# id: a unique id
+# location: the position of the machine; coordinates are in range 0.0 to 1.0
+# buffers: the size of the buffers
+# capability: the capability that is equipped at the start of an episode.
+# randomCapability: If set to true, the initial capability will be randomized.
+#                   The capability attribute will be ignored in this case.
+# randomFailures: The probability of random failures at the start of an episode.
+#                 Each capability can break with the given probability.
+# capabilities: A list of all supported capabilities.
+[[machines]]
+  id = "Machine-1"
+  location = {posX = 0.2, posY = 0.5}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "A"
+    randomCapability = true
+    randomFailures = 0.1
+    capabilities = [
+      # id: the name of the capability. NOTE: Name must match with capabilities required in product workflows!
+      # status: If true the capability is working, else broken.
+      # setupTime: The time required for a capability change. Time in seconds.
+      # processingTime: The time needed to complete the operation on a product. Time in seconds.
+      # maintenanceTime: Reset the current failure rate of the capability to zero (see failureRate attribute). Time in seconds.
+      # repairTime: Will be used instead of maintenanceTime if the capability is already broken.
+      #             Repair the capability and reset the current failure rate to zero. Time in seconds.
+      # failureRate: The probability of a capability failure increases after each processed product.
+      #              The rate at which the probability increased is given by failureRate.
+      #              1) Machine completes product 2) Increase current failure rate by failureRate
+      #              3) Break the capability with the newly calculated probability
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-2"
+  location = {posX = 0.5, posY = 0.5}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "B"
+    randomCapability = true
+    randomFailures = 0.1
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]
+
+
+[[machines]]
+  id = "Machine-3"
+  location = {posX = 0.8, posY = 0.5}
+  inputBuffer = {size = 3.0}
+  outputBuffer = {size = 3.0}
+  [machines.serviceManager]
+    capability = "B"
+    randomCapability = true
+    randomFailures = 0.1
+    capabilities = [
+      {id = "A", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0},
+      {id = "B", status = true, setupTime = 50, processingTime = 10, maintenanceTime = 10, repairTime = 50, failureRate = 0.0}]

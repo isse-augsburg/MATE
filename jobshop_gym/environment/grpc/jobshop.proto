@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "jobshop.env";
+option java_outer_classname = "EnvProto";
+option objc_class_prefix = "JSE";
+
+package env;
+
+service Environment {
+
+  //Apply an action to all agents
+  rpc ApplyAction (MasAction) returns (MasActionResponse){};
+
+  //Reset the environment
+  rpc Reset (Empty) returns (MasState){};
+
+  //Show GUI
+  rpc Render (Empty) returns (Empty){};
+
+  //Set the env seed
+  rpc SetSeed (Seed) returns (Empty){};
+
+  //Set and get Settings
+  rpc Setup (SettingsMsg) returns (SetupMsg){};
+}
+
+message MasActionResponse {
+  MasState state = 1;
+  repeated RewardMsg reward = 2;
+  bool done = 3;
+  Info info = 4;
+}
+
+message Info {
+  int32 currentStep = 1;
+  int32 timeout = 2;
+}
+
+message SettingsMsg {
+  string config = 1;
+  double clockSpeed = 2;
+}
+
+message SetupMsg {
+  repeated MachineMsg machines = 1;
+  ProductSetupMsg products = 2;
+}
+
+message MasState {
+  repeated MachineMsg machines = 1;
+  repeated ProductMsg products = 2;
+}
+
+message MachineMsg {
+  PositionMsg position = 1;
+  BufferMsg inputBuffer = 2;
+  BufferMsg outputBuffer = 3;
+  string capability = 4;
+  repeated CapabilityMsg capabilities = 5;
+}
+
+message CapabilityMsg {
+  string id = 1;
+  bool status = 2;
+  int32 setupTime = 3;
+  int32 processingTime = 4;
+  double failureRate = 5;
+  int32 maintenanceTime = 6;
+  int32 repairTime = 7;
+}
+
+message ProductMsg {
+  string id = 1;
+  double size = 2;
+  int32 step = 3;
+  int32 arrival = 4;
+  int32 duration = 5;
+  repeated string workflow = 6;
+}
+
+message ProductSetupMsg {
+  int32 batchSize = 1;
+  int32 batchCount = 2;
+  repeated ProductMsg products = 3;
+}
+
+message RewardMsg {
+  int32 globalProcessed = 1;
+  int32 localProcessed = 2;
+  int32 makespan = 3;
+  double flowTime = 4;
+  double tardiness = 5;
+  double lateness = 6;
+  uint64 utilization = 7;
+}
+
+message PositionMsg {
+  double posX = 1;
+  double posY = 2;
+}
+
+message BufferMsg {
+  double size = 1;
+  double utilization = 2;
+}
+
+message MasAction {
+  repeated Action action = 1;
+}
+
+message Action {
+  string capability = 1;
+  string operation = 2;
+}
+
+message Seed {
+  int32 seed = 1;
+}
+
+message Empty {}
