@@ -58,6 +58,7 @@ public class AgvAgent {
 
   @AgentBody
   private void reactiveBehavior() {
+    actsense.setup();
     bdiFeature.dispatchTopLevelGoal(new SearchProduct());
     bdiFeature.dispatchTopLevelGoal(new DeliverProduct());
   }

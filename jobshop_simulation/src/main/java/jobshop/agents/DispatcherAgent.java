@@ -25,6 +25,7 @@ public class DispatcherAgent {
 
   @AgentBody
   private void behavior() {
+    actsense.setup();
     bdiFeature.dispatchTopLevelGoal(new CreateProducts());
   }
 

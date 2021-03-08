@@ -36,6 +36,9 @@ public class SensorActuatorMachine {
     }
     self = Environment.getInstance().createMachine(agent);
     template = new ServiceManager(self.getServiceManager());
+  }
+
+  public void setup() {
     waitStepWithCheck();
   }
 

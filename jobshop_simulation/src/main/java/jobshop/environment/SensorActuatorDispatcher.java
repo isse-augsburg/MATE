@@ -35,6 +35,9 @@ public class SensorActuatorDispatcher {
       throw new IllegalStateException("Must be called on agent thread.");
     }
     self = Environment.getInstance().createDispatcher(agent);
+  }
+
+  public void setup() {
     waitStepWithCheck(false);
   }
 

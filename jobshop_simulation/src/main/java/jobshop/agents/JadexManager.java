@@ -37,6 +37,8 @@ public class JadexManager {
    */
   public void startPlatform() {
     IPlatformConfiguration conf = PlatformConfigurationHandler.getMinimal();
+    //Not good?
+    conf.setDefaultTimeout(Integer.MAX_VALUE);
     conf.setValue("kernel_bdi", true);
     conf.addComponent(SERVER_AGENT);
     fut = Starter.createPlatform(conf);
@@ -63,12 +65,12 @@ public class JadexManager {
    */
   public void startEnvironmentAgents(double clockSpeed) {
     applyClockSpeed(clockSpeed);
-    fut.get().addComponent(DISPATCHER_AGENT);
+    fut.get().addComponent(DISPATCHER_AGENT).get();
     for (int i = 0; i < Environment.getInstance().getSettings().getMachines().size(); i++) {
-      fut.get().addComponent(MACHINE_AGENT);
+      fut.get().addComponent(MACHINE_AGENT).get();
     }
     for (int i = 0; i < Environment.getInstance().getSettings().getAgvGroupSize(); i++) {
-      fut.get().addComponent(AGV_AGENT);
+      fut.get().addComponent(AGV_AGENT).get();
     }
   }
 

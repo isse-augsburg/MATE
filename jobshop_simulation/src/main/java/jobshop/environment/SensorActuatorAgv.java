@@ -35,6 +35,9 @@ public class SensorActuatorAgv {
       throw new IllegalStateException("Must be called on agent thread.");
     }
     self = Environment.getInstance().createAgv(agent);
+  }
+
+  public void setup() {
     waitStepWithCheck();
   }
 

@@ -37,6 +37,7 @@ public class MachineAgent {
 
   @AgentBody
   private void behavior() {
+    actsense.setup();
     bdiFeature.dispatchTopLevelGoal(new MachinePlan());
   }
 
